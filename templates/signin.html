@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Cover Letter AI</title>
+    <link rel="stylesheet" href="/static/content.css">
+</head>
+<body class="auth-page-body">
+    <div class="auth-header">
+        <div class="header-brand">
+            <span class="brand-icon">📄</span>
+            <h1 class="auth-site-title">Cover Letter AI</h1>
+        </div>
+        <p class="auth-site-tagline">Create professional cover letters in seconds</p>
+    </div>
+    
+    <div class="auth-container">
+        <h2 class="auth-title">Welcome Back</h2>
+        <p class="auth-subtitle">Sign in to continue creating amazing cover letters</p>
+        
+        <form id="signinForm" class="auth-form" onsubmit="handleSignin(event)">
+            <input type="email" id="signinEmail" placeholder="Email address" required class="auth-input">
+            <input type="password" id="signinPassword" placeholder="Password" required class="auth-input">
+            <button type="submit" class="auth-btn">Sign In</button>
+        </form>
+        
+        <div class="auth-switch">
+            New here? <a href="/signup" class="auth-link">Create an account</a>
+        </div>
+    </div>
+    <script type="module">
+        import { auth, signInWithEmailAndPassword } from '/static/firebase-config.js';
+        
+        window.handleSignin = async function(event) {
+            event.preventDefault();
+            const email = document.getElementById('signinEmail').value.trim();
+            const password = document.getElementById('signinPassword').value;
+            const submitBtn = document.querySelector('.auth-btn');
+            
+            if (!email || !password) {
+                alert('Please enter both email and password');
+                return;
+            }
+            
+            // Show loading state
+            submitBtn.textContent = 'Signing In...';
+            submitBtn.disabled = true;
+            
+            try {
+                // Sign in with Firebase
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                
+                // Store user info in sessionStorage for the dashboard
+                sessionStorage.setItem('user', JSON.stringify({
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: user.displayName
+                }));
+                
+                // Redirect to dashboard
+                window.location.href = '/dashboard';
+                
+            } catch (error) {
+                console.error('Error signing in:', error);
+                let errorMessage = 'Failed to sign in. ';
+                
+                switch (error.code) {
+                    case 'auth/user-not-found':
+                        errorMessage += 'No account found with this email.';
+                        break;
+                    case 'auth/wrong-password':
+                        errorMessage += 'Incorrect password.';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage += 'Please enter a valid email address.';
+                        break;
+                    case 'auth/too-many-requests':
+                        errorMessage += 'Too many failed attempts. Please try again later.';
+                        break;
+                    default:
+                        errorMessage += 'Please check your credentials and try again.';
+                }
+                
+                alert(errorMessage);
+            } finally {
+                // Reset button state
+                submitBtn.textContent = 'Sign In';
+                submitBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html> 

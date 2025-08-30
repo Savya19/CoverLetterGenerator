@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cover Letter AI</title>
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" href="/static/content.css">
+</head>
+
+<body>
+    <div class="top-header">
+        <div class="header-brand">
+            <span class="brand-icon">📄</span>
+            <span class="brand-text">Cover Letter <strong>AI</strong></span>
+            <span class="brand-tagline">Create professional cover letters in seconds</span>
+        </div>
+        <div class="auth-nav">
+            <span id="userWelcome" class="user-welcome"></span>
+            <a href="#" onclick="handleLogout()" class="auth-nav-link">Logout</a>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="form-container">
+            <div class="upload-section">
+                <div class="upload-header">
+                    <span class="upload-icon">📤</span>
+                    <span class="upload-title">Upload your CV (PDF)</span>
+                </div>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-placeholder">
+                        <span class="upload-icon-large">📤</span>
+                        <p>Drop your PDF here or click to browse</p>
+                    </div>
+                    <input type="file" id="cvUpload" accept=".pdf" hidden>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <div class="input-header">
+                        <span class="input-icon">🏢</span>
+                        <span class="input-title">Company Name</span>
+                    </div>
+                    <input type="text" placeholder="e.g., Google" id="companyName" class="form-input">
+                </div>
+                <div class="form-group">
+                    <div class="input-header">
+                        <span class="input-icon">🎯</span>
+                        <span class="input-title">Target Role</span>
+                    </div>
+                    <input type="text" placeholder="e.g., Software Engineer" id="targetRole" class="form-input">
+                </div>
+            </div>
+
+            <div class="form-group full-width">
+                <div class="input-header">
+                    <span class="input-icon">📝</span>
+                    <span class="input-title">Company Description</span>
+                </div>
+                <textarea id="companyDesc" placeholder="Paste the company description or job posting here..." rows="4"
+                    class="form-textarea"></textarea>
+            </div>
+
+            <button id="generateBtn" class="generate-btn">Generate Cover Letter</button>
+        </div>
+
+        <div id="outputSection" class="output-section" style="display:none;">
+            <h2 class="output-title">Generated Cover Letter</h2>
+            <div id="output" class="output-content"></div>
+            <button id="downloadBtn" class="download-btn">Download as Word</button>
+        </div>
+    </main>
+    <script src="/static/ran.js"></script>
+    <script type="module">
+        import { auth } from '/static/firebase-config.js';
+        import { signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+        // Check if user is authenticated
+        window.addEventListener('DOMContentLoaded', function () {
+            const user = JSON.parse(sessionStorage.getItem('user') || 'null');
+
+            if (!user) {
+                // Redirect to signin if not authenticated
+                window.location.href = '/signin';
+                return;
+            }
+
+            // Display welcome message
+            const welcomeElement = document.getElementById('userWelcome');
+            if (welcomeElement && user.displayName) {
+                welcomeElement.textContent = `Welcome, ${user.displayName.split(' ')[0]}!`;
+            }
+        });
+
+        // Logout function
+        window.handleLogout = async function () {
+            try {
+                await signOut(auth);
+                sessionStorage.removeItem('user');
+                window.location.href = '/signin';
+            } catch (error) {
+                console.error('Error signing out:', error);
+                alert('Error signing out. Please try again.');
+            }
+        }
+    </script>
+</body>
+
+</html>
+<script>
+    // Upload area functionality
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('cvUpload');
+
+    uploadArea.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.style.borderColor = '#ff1493';
+        uploadArea.style.background = 'rgba(255, 255, 255, 0.9)';
+    });
+
+    uploadArea.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        uploadArea.style.borderColor = '#ff69b4';
+        uploadArea.style.background = 'rgba(255, 255, 255, 0.5)';
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.style.borderColor = '#ff69b4';
+        uploadArea.style.background = 'rgba(255, 255, 255, 0.5)';
+
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            fileInput.files = files;
+            updateUploadDisplay(files[0]);
+        }
+    });
+
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            updateUploadDisplay(e.target.files[0]);
+        }
+    });
+
+    function updateUploadDisplay(file) {
+        const placeholder = uploadArea.querySelector('.upload-placeholder');
+        placeholder.innerHTML = `
+                <span class="upload-icon-large">✅</span>
+                <p><strong>${file.name}</strong></p>
+                <p style="font-size: 14px; color: #666;">Click to change file</p>
+            `;
+    }
+
+    // Generate button functionality
+    document.getElementById('generateBtn').addEventListener('click', async function () {
+        const fileInput = document.getElementById('cvUpload');
+        const companyName = document.getElementById('companyName').value.trim();
+        const targetRole = document.getElementById('targetRole').value.trim();
+        const companyDesc = document.getElementById('companyDesc').value.trim();
+
+        if (!fileInput.files[0]) {
+            alert('Please upload your CV first');
+            return;
+        }
+
+        if (!companyName || !targetRole) {
+            alert('Please fill in company name and target role');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('cv', fileInput.files[0]);
+        formData.append('company', companyName);
+        formData.append('job', targetRole);
+        formData.append('company_desc', companyDesc);
+
+        const button = this;
+        const originalText = button.textContent;
+        button.textContent = 'Generating...';
+        button.disabled = true;
+
+        try {
+            const response = await fetch('/generate_cover_letter', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                document.getElementById('output').textContent = data.cover_letter;
+                document.getElementById('outputSection').style.display = 'block';
+                document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth' });
+
+                // Store for download
+                window.currentCoverLetter = data.cover_letter;
+            } else {
+                alert('Error: ' + (data.error || 'Failed to generate cover letter'));
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to generate cover letter. Please try again.');
+        } finally {
+            button.textContent = originalText;
+            button.disabled = false;
+        }
+    });
+
+    // Download functionality
+    document.getElementById('downloadBtn').addEventListener('click', async function () {
+        if (!window.currentCoverLetter) {
+            alert('No cover letter to download');
+            return;
+        }
+
+        try {
+            const response = await fetch('/download_cover_letter', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    cover_letter: window.currentCoverLetter
+                })
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'cover_letter.docx';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            } else {
+                alert('Failed to download cover letter');
+            }
+        } catch (error) {
+            console.error('Download error:', error);
+            alert('Failed to download cover letter');
+        }
+    });
+</script>
