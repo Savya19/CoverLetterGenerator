@@ -1,6 +1,6 @@
-import cohere
 import fitz  # PyMuPDF
 from flask import Flask, request, render_template, jsonify, send_file, send_from_directory
+from flask.cli import load_dotenv
 from flask_cors import CORS  # For cross-origin requests
 import os
 from docx import Document
@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename
 import traceback
 import google.generativeai as genai
 
-
+load_dotenv()
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 CORS(app, supports_credentials=True)
@@ -21,7 +21,8 @@ app.config['ALLOWED_EXTENSIONS'] = {'pdf'}
 app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024  # 2MB limit
 
 # Initialize Cohere client (replace with your actual API key)
-genai.configure(api_key="AIzaSyA3s9WWrMm1qLsmn4m3jgos_rIxphs1-oo")
+API_KEY = os.getenv('api_key')
+genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel(model_name="gemini-1.5-flash-latest")
 
 
