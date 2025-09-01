@@ -21,7 +21,7 @@ app.config['ALLOWED_EXTENSIONS'] = {'pdf'}
 app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024  # 2MB limit
 
 # Initialize Cohere client (replace with your actual API key)
-genai.configure(api_key="AIzaSyA3s9WWrMm1qLsmn4m3jgos_rIxphs1-oo")
+genai.configure(api_key="API_KEY")
 model = genai.GenerativeModel(model_name="gemini-1.5-flash-latest")
 
 
