@@ -129,6 +129,7 @@ def generate_cover_letter():
         13. User should not have any fields to fill.
         14. The cover letter should be in a way that it could be sent immediately to the hiring manager.
         15. Properly parse the resume and extract key information such as education, work experience, and skills clearly and correctly.
+        16. Prepare a cover letter based on the job description, and the company description.
 
         Cover Letter:
         """
