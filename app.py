@@ -102,7 +102,7 @@ def generate_cover_letter():
         cv_text = extract_pdf(filepath)
         print("Extracted CV Text:", cv_text[:200], "...")  # print preview
 
-        # Generate using Cohere
+
         prompt = f"""
         Write a professional, tailored cover letter based on the following information:
 
@@ -114,22 +114,18 @@ def generate_cover_letter():
         Company Description: {company_desc}
 
         The cover letter should:
-        1. Address the hiring manager directly if possible
-        2. Should properly use the correct name of the college where the candidate has studied in/is currently enrolled in. It is usually under the education section.
-        3. Highlight relevant skills from the CV
-        4. Show enthusiasm for the specific role
-        5. There should not be bullet points
-        6. Be 3-4 paragraphs long only
-        7. Be written in a professional tone
-        8. Be concise and to the point
-        9. Stop after the name of the candidate, do not include any signature or closing statement.
-        10. Be formatted as a cover letter, not a resume or CV.
-        11. Be written in a way that it can be sent directly to the hiring manager.
-        12. Do not add a PS or any additional notes at the end.
-        13. User should not have any fields to fill.
-        14. The cover letter should be in a way that it could be sent immediately to the hiring manager.
-        15. Properly parse the resume and extract key information such as education, work experience, and skills clearly and correctly.
-        16. Prepare a cover letter based on the job description, and the company description.
+        1. Begin with a proper greeting (e.g., “Dear Hiring Manager,” or the hiring manager’s name if provided).
+        2. Structure the letter into 3–4 concise paragraphs:
+            1. Intro: State the role you’re applying for, your background, and enthusiasm.
+            2. Body (1–2 paragraphs): Highlight your most relevant skills, experiences, and projects from the resume, showing measurable impact where possible.
+            3. Closing: Express motivation to join the company and summarize what you will contribute.
+        3. Use details from the candidate’s resume accurately — include correct education, work experience, and skills.
+        4. Align the candidate’s strengths with the job description and the company’s values/mission.
+        5. Maintain a professional, confident, and concise tone. Avoid repetition, filler phrases, or generic statements.
+        6. Do not use bullet points.
+        7. Do not include addresses, phone numbers, email, LinkedIn, GitHub, or dates.
+        8. End with the candidate’s full name only (no “Sincerely,” or extra notes).
+        9. Format the output as a clean, professional cover letter that can be sent directly online.
 
         Cover Letter:
         """
