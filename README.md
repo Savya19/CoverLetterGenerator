@@ -13,9 +13,7 @@ A web application that generates personalized cover letters using AI based on yo
 
 ## Architecture
 
-This project has **two separate frontends**:
 1. **Flask Templates** (templates/*.html) - The main production app with vanilla JS
-2. **React App** (src/*) - An alternative modern frontend (separate, not integrated)
 
 ## Setup
 
@@ -36,11 +34,6 @@ pip install flask flask-cors google-generativeai pymupdf python-docx
 api_key=your_google_gemini_api_key_here
 ```
 
-### Frontend (React)
-1. Install Node.js dependencies:
-```bash
-npm install
-```
 
 2. Configure Firebase:
    - Create a Firebase project at https://console.firebase.google.com
@@ -49,7 +42,7 @@ npm install
 
 ## Running the Application
 
-### Option 1: Flask Templates (Main App)
+### Flask Templates (Main App)
 1. Run the Flask application:
 ```bash
 python app.py
