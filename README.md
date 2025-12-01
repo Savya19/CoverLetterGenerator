@@ -19,7 +19,6 @@ A web application that generates personalized cover letters using AI based on yo
 
 ### Prerequisites
 - Python 3.7+
-- Node.js 14+
 - Google Gemini API key
 - Firebase project (for authentication)
 
@@ -84,21 +83,7 @@ python app.py
 ```
 ├── app.py                      # Flask backend API
 ├── .env                        # Environment variables (API keys)
-├── package.json               # React dependencies
-├── public/                    # React public files
-│   └── index.html            # React HTML template
-├── src/                       # React source code
-│   ├── components/           # React components
-│   │   ├── Header.js        # App header
-│   │   ├── Footer.js        # App footer
-│   │   ├── CoverLetterForm.js    # Upload and input form
-│   │   ├── CoverLetterDisplay.js # Generated letter display
-│   │   └── AuthModal.js     # Authentication modal
-│   ├── App.js               # Main App component
-│   ├── App.css              # Main styles
-│   └── index.js             # React entry point
-├── build/                    # React build output (generated)
-├── templates/                # Flask HTML templates (legacy/fallback)
+├── templates/                # Flask HTML templates 
 │   ├── signin.html          # Sign in page
 │   ├── signup.html          # Sign up page
 │   └── index.html           # Dashboard page
