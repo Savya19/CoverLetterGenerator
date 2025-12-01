@@ -13,9 +13,7 @@ A web application that generates personalized cover letters using AI based on yo
 
 ## Architecture
 
-This project has **two separate frontends**:
 1. **Flask Templates** (templates/*.html) - The main production app with vanilla JS
-2. **React App** (src/*) - An alternative modern frontend (separate, not integrated)
 
 ## Setup
 
@@ -36,11 +34,6 @@ pip install flask flask-cors google-generativeai pymupdf python-docx
 api_key=your_google_gemini_api_key_here
 ```
 
-### Frontend (React)
-1. Install Node.js dependencies:
-```bash
-npm install
-```
 
 2. Configure Firebase:
    - Create a Firebase project at https://console.firebase.google.com
@@ -49,7 +42,7 @@ npm install
 
 ## Running the Application
 
-### Option 1: Flask Templates (Main App)
+### Flask Templates (Main App)
 1. Run the Flask application:
 ```bash
 python app.py
@@ -58,20 +51,6 @@ python app.py
 2. Open your browser and navigate to `http://localhost:5000`
 3. Sign in/sign up and use the dashboard
 
-### Option 2: React Frontend (Alternative)
-The React app is a separate frontend that's **not integrated** with Flask routing.
-
-1. Start the Flask backend (for API only):
-```bash
-python app.py
-```
-
-2. In a new terminal, start the React development server:
-```bash
-npm start
-```
-
-3. The React app will run on `http://localhost:3000` and make API calls to Flask on port 5000
 
 ## Usage
 
@@ -99,11 +78,6 @@ npm start
 - HTML/CSS with glassmorphism effects
 - Responsive design
 
-### Frontend (React - Alternative/Unused)
-- React 18
-- Axios (HTTP client)
-- Lucide React (Icons)
-- Modern CSS
 
 ## Project Structure
 
@@ -156,5 +130,4 @@ api_key=your_google_gemini_api_key
 - CV files are temporarily stored in `uploads/` and automatically deleted after processing
 - Maximum file size: 2MB
 - Supported format: PDF only
-- **The Flask app serves HTML templates, not the React app**
-- The React frontend is a separate implementation that would need additional integration to work with Flask routing
+
