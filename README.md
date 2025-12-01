@@ -12,6 +12,10 @@ A web application that generates personalized cover letters using AI based on yo
 - � FResponsive design
 
 
+<<<<<<< HEAD
+=======
+1. **Flask Templates** (templates/*.html) - The main production app with vanilla JS
+>>>>>>> 58ae3c9a2d96c2479634ac0906e4bfad5123640a
 
 ## Setup
 
@@ -31,6 +35,7 @@ pip install flask flask-cors google-generativeai pymupdf python-docx
 api_key=your_google_gemini_api_key_here
 ```
 
+<<<<<<< HEAD
 ### Frontend Setup
 Configure Firebase:
 - Create a Firebase project at https://console.firebase.google.com
@@ -39,6 +44,17 @@ Configure Firebase:
 
 ## Running the Application
 
+=======
+
+2. Configure Firebase:
+   - Create a Firebase project at https://console.firebase.google.com
+   - Enable Authentication (Email/Password)
+   - Copy your Firebase config to `static/firebase-config.js`
+
+## Running the Application
+
+### Flask Templates (Main App)
+>>>>>>> 58ae3c9a2d96c2479634ac0906e4bfad5123640a
 1. Run the Flask application:
 ```bash
 python app.py
@@ -74,6 +90,10 @@ python app.py
 - HTML/CSS with glassmorphism effects
 - Responsive design
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 58ae3c9a2d96c2479634ac0906e4bfad5123640a
 ## Project Structure
 
 ```
