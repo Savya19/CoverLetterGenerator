@@ -24,7 +24,7 @@ app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024  # 2MB limit
 API_KEY = os.getenv("api_key")
 
 genai.configure(api_key=API_KEY)
-model = genai.GenerativeModel(model_name="gemini-1.5-flash-latest")
+model = genai.GenerativeModel(model_name="gemini-2.5-flash")
 
 
 # Ensure upload directory exists
