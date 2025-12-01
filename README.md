@@ -8,8 +8,8 @@ A web application that generates personalized cover letters using AI based on yo
 - 🏢 Enter company and role details
 - 🤖 AI-powered cover letter generation using Google Gemini
 - 📥 Download as Word document
-- � Fiwrebase authentication (sign in/sign up)
-- � FResponsive design
+- � Firebase authentication (sign in/sign up)
+- � Responsive design
 
 ## Architecture
 
@@ -66,7 +66,7 @@ python app.py
 
 ### Backend
 - Flask (Web framework)
-- Google Gemini AI (gemini-1.5-flash-latest for cover letter generation)
+- Google Gemini AI (gemini-2.5-flash-latest for cover letter generation)
 - PyMuPDF (fitz - PDF text extraction)
 - python-docx (Word document generation)
 - Flask-CORS (Cross-origin requests)
